@@ -154,16 +154,16 @@ class LinkedList:
             return False
         return True
 
-    def sort_list(self, sort_type='C'):
-        """
-        Work in progress....
-
-        Sort a Linked List. If sort_type is default 'C' the list will be sorted the same way a normal python list will be sorted. If sort_type is 'H',
-        the list will be sorted the way a human would sort a list.
-        sort_type='C' is for computer sort
-        sort_type='H' is for human sort
-        """
-        pass        
+    def bubble_sort(self):  # Also called Naive Approach
+        """Largest item bubbles to the top. time: O(n^2) space: O(1) * in place sort."""
+        cur = self.head
+        while cur.next:
+            if cur.value > cur.next.value:
+                removed_item = self.delete_value(cur.value)
+                self.append(removed_item.value)
+                cur = self.head
+            else:
+                cur = cur.next        
                 
     def display(self):
         """Display is a Helper Function to show if code is working."""
