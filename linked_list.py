@@ -156,11 +156,11 @@ class LinkedList:
 
     def bubble_sort(self):  # Also called Naive Approach
         """Largest item bubbles to the top. time: O(n^2) space: O(1) * in place sort."""
-        cur = self.head
-        while cur.next:
+        cur = self.head  # Space complexity is constant because we only use the cur and keep reassigning its value.
+        while cur.next:  # First O(n)
             if cur.value > cur.next.value:
-                removed_item = self.delete_value(cur.value)
-                self.append(removed_item.value)
+                removed_item = self.delete_value(cur.value)  # Second O(n)
+                self.append(removed_item.value)  # Appending on a normal list is O(1)
                 cur = self.head
             else:
                 cur = cur.next        
