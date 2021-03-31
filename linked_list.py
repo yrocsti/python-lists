@@ -7,13 +7,19 @@ Then create a doubly linked list and a circular singly linked list and circular 
 """
 
 
+import random
+
+
 class Node:
     """Create an object node to go into linked list."""
 
     def __init__(self, value):
-        """Create a node with a specified value and do not specifiy next.
-            This class is not to be instantiated alone. An instance of Node is
-            created in the init, append and insert methods of LinkedList."""
+        """
+        Create a node with a specified value and do not specifiy next.
+
+        This class is not to be instantiated alone. An instance of Node is
+        created in the init, append and insert methods of LinkedList.
+        """
         self.value = value
         self.next = None
 
@@ -24,6 +30,19 @@ class LinkedList:
     def __init__(self, data=None):
         """Create head of a linked list."""
         self.head = Node(data)
+
+    def __iter__(self):
+        """Iterate method."""
+        return self
+
+    def __next__(self):
+        """Return next item for iter."""
+        cur = self.head
+        while cur:
+            print(cur.value)
+            cur = cur.next
+        else:
+            raise StopIteration
 
     def append(self, data):
         """Add item to end of linked list."""
@@ -41,7 +60,7 @@ class LinkedList:
         """Return the value at the given index."""
         cur = self.head
         counter = 0
-        if position <= self.get_length():
+        if position <= (self.get_length() - 1):
             while counter <= position:
                 if counter == position:
                     return cur.value
@@ -128,17 +147,18 @@ class LinkedList:
         return counter
 
     def get_next(self, value):
+        """Return next value after input value."""
         if type(self.get_values_index(value)) is int:
             cur = self.head
             while cur.value is not value:
                 cur = cur.next
-            if cur.next != None:
+            if cur.next is not None:
                 return cur.next
             return False
-        
+
     def get_prev(self, value):
         """Return previous item if there is a previous item, otherwise returns False."""
-        if type(self.get_values_index(value)) is int:
+        if isinstance(self.get_values_index(value), int):
             cur = self.head
             prev = ''
             while cur.value is not value:
@@ -146,25 +166,29 @@ class LinkedList:
                 cur = cur.next
             if cur is self.head:
                 return False
-            return prev
+            return prev  # If you want the value and not the node object return prev.value
 
     def is_empty(self):
         """Check if head is None. If head is None it will return True the list is empty."""
-        if self.head.value:
+        if self.head.value is not None:
             return False
         return True
 
     def bubble_sort(self):  # Also called Naive Approach
         """Largest item bubbles to the top. time: O(n^2) space: O(1) * in place sort."""
-        cur = self.head  # Space complexity is constant because we only use the cur and keep reassigning its value.
-        while cur.next:  # First O(n)
+        cur = self.head
+        while cur.next:  # Big O(n)
             if cur.value > cur.next.value:
-                removed_item = self.delete_value(cur.value)  # Second O(n)
-                self.append(removed_item.value)  # Appending on a normal list is O(1)
+                removed_item = self.delete_value(
+                    cur.value
+                )  # O(1) in this case, because we are only changing a nodes next pointer.
+                self.append(
+                    removed_item.value
+                )  # would be O(1), but here it is O(n) due to having to go through the entire list to add an node.
                 cur = self.head
             else:
-                cur = cur.next        
-                
+                cur = cur.next
+
     def display(self):
         """Display is a Helper Function to show if code is working."""
         my_list = []
@@ -172,7 +196,4 @@ class LinkedList:
         while cur:
             my_list.append(cur.value)
             cur = cur.next
-        print(my_list)
-
-
-
+        return my_list
