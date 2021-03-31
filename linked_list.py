@@ -7,9 +7,6 @@ Then create a doubly linked list and a circular singly linked list and circular 
 """
 
 
-import random
-
-
 class Node:
     """Create an object node to go into linked list."""
 
